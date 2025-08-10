@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://memo-bloom-backend.vercel.app/'
+export const BASE_URL = 'https://memobloom-backend-1.onrender.com/'
