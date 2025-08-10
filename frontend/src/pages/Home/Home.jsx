@@ -103,7 +103,7 @@ const Home = () => {
         <NoteCard
           key={item._id}
           title={item.title}
-          date={moment(item.createdOn).format("Do MMM YYYY")}
+          date={moment(item.updatedOn).format("Do MMM YYYY")}
           content={item.content}
           tags={item.tags}
           isPinned={item.isPinned}
