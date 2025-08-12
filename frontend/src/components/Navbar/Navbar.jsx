@@ -4,12 +4,34 @@ import ProfileInfo from "../Cards/ProfileInfo";
 import SearchBar from '../SearchBar/SearchBar';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import toast from 'react-hot-toast';
 const Navbar = ({ setSearchQuery }) => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const onLogout = () => {
+    toast.success("Logged Out!", {
+  style: {
+    background: "linear-gradient(135deg, #4ade80, #16a34a)", // brighter green gradient
+    color: "#f0fdfa", // super light teal-ish
+    fontWeight: "700",
+    borderRadius: "20px",
+    padding: "10px 40px",
+    boxShadow: "0 8px 25px rgba(22, 163, 74, 0.6), 0 0 15px rgba(5, 150, 105, 0.4)", // stronger glow
+    fontSize: "19px",
+    letterSpacing: "0.8px",
+    textTransform: "capitalize",
+    fontFamily: "'Poppins', sans-serif",
+    backdropFilter: "blur(10px)",
+    border: "1.5px solid rgba(22, 163, 74, 0.5)",
+  },
+  iconTheme: {
+    primary: "#a7f3d0",
+    secondary: "#065f46",
+  },
+  duration: 4500,
+});
+
     localStorage.clear();
     navigate("/login");
   };

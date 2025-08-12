@@ -5,13 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { ClipLoader } from "react-spinners";
-import { use } from "react";
+
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
  const[isLoading,setIsLoading]=useState(false);
    const navigate = useNavigate();
 
@@ -48,10 +49,16 @@ const SignUp = () => {
 
     if (response.data?.accessToken) {
       localStorage.setItem("token", response.data.accessToken);
-      setTimeout(() => {
+      console.log("Response from the backend",response);
+      console.log("Email which user entered",response.data.user.email);
+      console.log("Otp of the user",response.data.user.otp);
+
+      navigate("/verify-otp",{state:{email:email}});
+     
+     { /*setTimeout(() => {
         setIsLoading(false);
         navigate("/dashboard");
-      }, 1000);
+      }, 1000);*/}
     }
   } catch (error) {
     if (error.response?.data?.message) {
@@ -109,8 +116,8 @@ const SignUp = () => {
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
-                  <ClipLoader size={22} color="#ffffff" loading={true} />
-                  <span className="ml-2">Creating Accout...</span>
+                  <ClipLoader size={22} color="#ffffff" loading={loading} />
+                 {loading && <span className="ml-2">Creating Account...</span>}
                 </div>
               ) : (
                 "Create Account"

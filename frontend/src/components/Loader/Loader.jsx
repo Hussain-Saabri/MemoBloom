@@ -8,7 +8,7 @@ const Loader=()=>{
   <ClipLoader color="#3B82F6" size={100} cssOverride={{
     borderWidth: "12px", // default is about 2-3px
   }}/>
-  <h1 className="font-black mt-4">Loading</h1>
+  
 </div>
 
     

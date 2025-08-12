@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import PasswordInput from '../../components/Input/PasswordInput';
 import { ClipLoader } from 'react-spinners';
-
+import Loader from '../../components/Loader/Loader';
+import toast from 'react-hot-toast';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +30,30 @@ const Login = () => {
       const response = await axiosInstance.post("/login", { email, password });
       if (response.data && response.data.accessToken) {
         localStorage.setItem("token", response.data.accessToken);
+        toast.success("Logged In!", {
+  style: {
+    background: "linear-gradient(135deg, #4ade80, #16a34a)", // brighter green gradient
+    color: "#f0fdfa", // super light teal-ish
+    fontWeight: "700",
+    borderRadius: "20px",
+    padding: "10px 20px",  // increased padding for height
+    boxShadow: "0 8px 25px rgba(22, 163, 74, 0.7), 0 0 18px rgba(5, 150, 105, 0.5)", // stronger glow with bigger spread
+    fontSize: "19px",
+    lineHeight: "1.4",  // better vertical alignment
+    letterSpacing: "0.8px",
+    textTransform: "capitalize",
+    fontFamily: "'Poppins', sans-serif",
+    backdropFilter: "blur(10px)",
+    border: "1.5px solid rgba(22, 163, 74, 0.5)",
+  },
+  iconTheme: {
+    primary: "#a7f3d0",
+    secondary: "#065f46",
+  },
+  duration: 4500,
+});
+
+
         setTimeout(() => {
           setIsLoading(false);
           navigate("/dashboard");
