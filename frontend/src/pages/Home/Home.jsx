@@ -87,18 +87,19 @@ const Home = () => {
 {allNotes === null ? null : allNotes.length === 0 ? (
   <HomeEmptyCard />
 ) : (
- <div className="container mx-auto max-w-6xl px-4">
+ <div className="container mx-auto max-w-6xl px-4 mt-5">
   {notesToShow.length === 0 ? (
     <EmptyCard />
   ) : (
     <div className="
-      grid gap-6
-      grid-cols-1 
-      sm:grid-cols-2 
-      lg:grid-cols-3 
-      xl:grid-cols-4
-      auto-rows-fr
-    ">
+  grid gap-6
+  grid-cols-1 
+  sm:grid-cols-2 
+  lg:grid-cols-3 
+  xl:grid-cols-4
+  items-stretch
+">
+
       {notesToShow.map((item) => (
         <NoteCard
           key={item._id}
