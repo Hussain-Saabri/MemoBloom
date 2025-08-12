@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import PasswordInput from '../../components/Input/PasswordInput';
 import { ClipLoader } from 'react-spinners';
-import Loader from '../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 const Login = () => {
   const [email, setEmail] = useState('');

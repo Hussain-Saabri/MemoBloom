@@ -25,7 +25,7 @@ const [loading, setLoading] = useState(false);
           email: email,
           otp: otp,
         });
-
+        console.log("otp ",otp);
         console.log("Respose from the api for verifying the otp",response);
        if (response.data.message === 'otp is required') {
   toast.error("Please enter the 6-digit OTP to proceed.", {
@@ -60,7 +60,7 @@ const [loading, setLoading] = useState(false);
 
        
         
-     if(response.data === 'otp verified')
+     if(response.data.message === 'otp verified')
     {
        
         toast.success("otp gets verified", {
@@ -117,28 +117,26 @@ const [loading, setLoading] = useState(false);
     };
  const handleResendOtp = async (e) => {
   e.preventDefault();
-  setLoading(true); // Loader show karo
+  setLoading(true); // 
   setOtp(""); 
   try {
      
     const response = await axiosInstance.post("/resend-otp", { email });
     console.log("Response from the api resending otp ", response);
     console.log("otp existing",setOtp);
-    if(response.data.error === false) {
-  toast.success("OTP sent again successfully!", {
-    style: {
-      background: "#22c55e",  // Tailwind green-500
-      color: "#fff",
-      fontWeight: "600",
-      borderRadius: "10px",
-      padding: "12px 16px",
-      boxShadow: "0 4px 15px rgba(34, 197, 94, 0.6)",
-      fontSize: "16px",
-      letterSpacing: "0.4px",
-    },
-  });
-}
+    if(response.data.error===false)
+    {
+        
+        toast.success("Otp sent again", {
+        style: {
+    background: "#22c55e",  // green
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  
+      });
 
+    }
 
    
     
