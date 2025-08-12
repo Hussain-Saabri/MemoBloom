@@ -21,13 +21,14 @@ const NoteCard = ({
     hover:-translate-y-1
     transition-all duration-300
     flex flex-col justify-between
-    relative bottom-4
+    relative bottom-3.5
+   
   "
 >
 
   {/* Header Row */}
-  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-    <h6 className="text-base sm:text-lg font-semibold text-gray-800 tracking-wide break-words">
+  <div className="flex flex-row sm:flex-row sm:items-start sm:justify-between gap-2 ">
+    <h6 className="text-base sm:text-lg m-0 font-semibold text-gray-800 tracking-wide break-words">
       {title}
     </h6>
     <button
@@ -36,7 +37,7 @@ const NoteCard = ({
       title="Pin Note"
     >
       <MdOutlinePushPin
-        className={`text-xl sm:text-2xl transition-colors duration-300 ${
+        className={`text-xl sm:text-2xl flex transition-colors duration-300 ${
           isPinned ? 'text-blue-600' : 'text-gray-400 hover:text-blue-500'
         }`}
       />

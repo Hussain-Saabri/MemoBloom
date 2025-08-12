@@ -87,7 +87,7 @@ const Home = () => {
 {allNotes === null ? null : allNotes.length === 0 ? (
   <HomeEmptyCard />
 ) : (
- <div className="container mx-auto max-w-6xl px-4 mt-5">
+ <div className="container mx-auto max-w-6xl px-4 mt-14">
   {notesToShow.length === 0 ? (
     <EmptyCard />
   ) : (
