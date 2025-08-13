@@ -1,215 +1,164 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../../components/Loader/Loader";
+
 const VerifyOtp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email || "";
   const [otp, setOtp] = useState("");
-const [error,setError]=useState("");
-const [loading, setLoading] = useState(false);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Verifying OTP:", otp, "for email:", email);
-  
-    // Call backend API to verify
-    setLoading(true);
-     
-    try {
-       
-        const response = await axiosInstance.post("/verify-otp", {
-          email: email,
-          otp: otp,
-        });
-        console.log("otp ",otp);
-        console.log("Respose from the api for verifying the otp",response);
-       if (response.data.message === 'otp is required') {
-  toast.error("Please enter the 6-digit OTP to proceed.", {
-    style: {
-      background: "#e53e3e",  // a strong red (Tailwind red-600)
-      color: "#fff",
-      fontWeight: "600",
-      borderRadius: "8px",
-      padding: "12px 16px",
-      boxShadow: "0 4px 12px rgba(229, 62, 62, 0.5)",
-      fontSize: "16px",
-      letterSpacing: "0.5px",
-    },
-  
-  });
-}
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-        if(response.data.message==='OTP has expired')
-        {
-            
-            toast.error("Otp has been expired!Resend otp", {
-        style: {
-          background: "red",
-          color: "#fff",
-          fontWeight: "bold",
-          
-        },
-        icon: "⚠️",
-      });
-      
-        }
-
-       
-        
-     if(response.data.message === 'otp verified')
-    {
-       
-        toast.success("otp gets verified", {
-        style: {
-          background: "blue",
-          color: "#fff",
-          fontWeight: "bold",
-          
-        },
-        icon: "⚠️",
-      });
-      
-       navigate('/dashboard');
-    }
-        if (response.data.message === 'Otp doesnot match') {
-  toast.error("The OTP you entered is incorrect. Please try again.", {
+  const toastStyleMobile = {
     style: {
-      background: "rgba(37, 99, 235, 0.8)",  // semi-transparent blue
-      color: "#fff",
+      maxWidth: "90vw",
+      margin: "0 auto",
+      fontSize: "14px",
       fontWeight: "600",
       borderRadius: "12px",
-      padding: "14px 18px",
-      boxShadow: "0 8px 24px rgba(37, 99, 235, 0.4)",
-      fontSize: "16px",
-      letterSpacing: "0.5px",
-      backdropFilter: "blur(8px)",   // blur effect behind toast
-      border: "1px solid rgba(255, 255, 255, 0.2)",
+      padding: "12px 16px",
+      boxShadow: "0 6px 15px rgba(0,0,0,0.1)",
+      letterSpacing: "0.4px",
     },
-  });
-}
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-        
-    {/*
-        if (response.data?.error) {
-          setError(response.data.message);
-            console.log()
-          return;
-        }
-    */}
-        
-      } catch (error) {
-        if (error.response?.data?.message) {
-          setError(error.response.data.message);
-        } else {
-          setError("An unexpected error occurred. Please try again.");
-        }
-       
-      }finally{
-        setTimeout(() => {
-    setLoading(false);
-  }, 500);
-      }
-    };
- const handleResendOtp = async (e) => {
-  e.preventDefault();
-  setLoading(true); // 
-  setOtp(""); 
-  try {
-     
-    const response = await axiosInstance.post("/resend-otp", { email });
-    console.log("Response from the api resending otp ", response);
-    console.log("otp existing",setOtp);
-    if(response.data.error===false)
-    {
-        
-        toast.success("Otp sent again", {
-        style: {
-    background: "#22c55e",  // green
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  
+    try {
+      const response = await axiosInstance.post("/verify-otp", {
+        email,
+        otp,
       });
 
+      if (response.data.message === "otp is required") {
+        toast.error("Please enter the 6-digit OTP to proceed.", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "#e53e3e", color: "#fff" },
+        });
+      } else if (response.data.message === "OTP has expired") {
+        toast.error("OTP has expired! Please resend OTP.", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "#dc2626", color: "#fff" },
+        });
+      } else if (response.data.message === "otp verified") {
+        toast.success("OTP verified successfully!", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "#2563eb", color: "#fff" },
+        });
+        navigate("/dashboard");
+      } else if (response.data.message === "Otp doesnot match") {
+        toast.error("Incorrect OTP. Please try again.", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "rgba(37, 99, 235, 0.8)", color: "#fff" },
+        });
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unexpected error. Try again.", toastStyleMobile);
+      setError(error.response?.data?.message || "An unexpected error occurred.");
+    } finally {
+      setTimeout(() => setLoading(false), 500);
     }
+  };
 
-   
-    
-
-  } catch (error) {
-    if (error.response?.data?.message) {
-      setError(error.response.data.message);
-    } else {
-      setError("An unexpected error occurred. Please try again.");
+  const handleResendOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setOtp("");
+    try {
+      const response = await axiosInstance.post("/resend-otp", { email });
+      if (response.data.error === false) {
+        toast.success("OTP sent again!", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "#22c55e", color: "#fff" },
+        });
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unexpected error. Try again.", toastStyleMobile);
+      setError(error.response?.data?.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false); //
-  }
-};
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md animate-fadeIn">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+    <>
+   
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-md animate-fadeIn">
+         <div className="text-center mb-6">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-500 to-lime-400 drop-shadow-md">
+              MemoBloom
+            </span>
+          </h1>
+         
+        </div>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 text-center">
           Verify OTP
         </h2>
-        <p className="text-gray-500 text-center mb-6">
-          Enter the 6-digit code sent to  
-          <span className="font-medium text-gray-800"> {email}</span>
+        <p className="text-gray-500 text-center mb-6 text-sm sm:text-base">
+          Enter the 6-digit code sent to{" "}
+          <span className="font-medium text-gray-800 break-words">{email}</span>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex justify-between gap-2">
-            {[...Array(6)].map((_, i) => (
-              <input
-                key={i}
-                type="text"
-                value={otp[i] || ""}   
-                maxLength="1"
-                className="w-12 h-12 text-center text-lg font-bold border-2 border-black rounded-lg focus:outline-none  focus:border-blue-500"
-               onChange={(e) => {
-                  const val = e.target.value.replace(/[^0-9]/g, "");
-                    if (val.length === 1 && i < 5) {
-    e.target.nextSibling.focus();  // next input pe cursor bhej do
-  }
-                  setOtp((prev) => {
-                    const arr = prev.split("");
-                    arr[i] = val;
-                    return arr.join("");
-                  });
-                }}
-              />
-            ))}
-          </div>
+         <div className="flex flex-wrap justify-between gap-1 sm:gap-2">
+  {[...Array(6)].map((_, i) => (
+    <input
+      key={i}
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={otp[i] || ""}
+      maxLength="1"
+      className="w-[13%] min-w-[40px] sm:w-12 h-10 sm:h-12 text-center text-lg sm:text-xl font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+      onChange={(e) => {
+        const val = e.target.value.replace(/[^0-9]/g, "");
+        if (val.length === 1 && i < 5) {
+          e.target.nextSibling?.focus();
+        }
+        setOtp((prev) => {
+          const arr = prev.split("");
+          arr[i] = val;
+          return arr.join("");
+        });
+      }}
+    />
+  ))}
+</div>
+
 
           <button
             type="submit"
-            onClick={handleSubmit}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 cursor-pointer rounded-lg font-medium transition-colors "
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white py-3 rounded-lg font-medium transition-colors"
           >
-            Verify OTP
+            {loading ? <Loader /> : "Verify OTP"}
           </button>
         </form>
 
-        <div className="text-center text-sm text-gray-500 mt-4">
-  Didn’t get the code?{" "}
-  {loading ? (
-    <Loader />
-  ) : (
-    <button onClick={handleResendOtp} className="text-blue-500 hover:underline cursor-pointer">
-      Resend Otp
-    </button>
-  )}
-</div>
-
-       
+        <div className="text-center text-sm text-gray-600 mt-5">
+          Didn’t get the code?{" "}
+          {loading ? (
+            <Loader />
+          ) : (
+            <button
+              onClick={handleResendOtp}
+              className="text-blue-600 hover:underline focus:outline-none"
+            >
+              Resend OTP
+            </button>
+          )}
+        </div>
       </div>
     </div>
+    </>
   );
 };
 
