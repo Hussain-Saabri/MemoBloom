@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://memobloom-backend-1.onrender.com'
+export const BASE_URL = 'https://memobloom-backend.onrender.com/'
