@@ -21,14 +21,14 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      setIsLoading(true);
+      
       const response = await axiosInstance.get("/get-note");
       if (response.data && response.data.note) {
         setAllNotes(response.data.note);
         console.log("All notes:", response.data.note);
       }
     } catch (error) {
-      setIsLoading(false);
+      
       console.log(error);
     }
     finally {
@@ -71,15 +71,23 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getAllNotes();
-    getUserInfo();
-  }, []);
-  useEffect(() => {
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem("token");
   if (!token) {
-    navigate('/login');
+    navigate("/login");
+    return;
   }
+
+  // Show loader for at least 2 seconds
+  setIsLoading(true);
+  const timer = setTimeout(() => {
+    Promise.all([getAllNotes(), getUserInfo()]).finally(() => {
+      setIsLoading(false);
+    });
+  }, 2000);
+
+  return () => clearTimeout(timer);
 }, []);
+
 
   const notesToShow = searchQuery ? filteredNotes : allNotes;
 
@@ -95,7 +103,7 @@ const Home = () => {
    
    
   
-) : allNotes.length === 0 ? (
+) :  allNotes.length === 0 ? (
   <HomeEmptyCard />
 ) : (
   <div className="container mx-auto max-w-6xl px-4 mt-14">

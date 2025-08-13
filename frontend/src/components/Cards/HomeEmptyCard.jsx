@@ -3,7 +3,7 @@ import AddNoNotesWhenLogin from '../../assets/add-notes.svg';
 
 const HomeEmptyCard = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-80px)]  px-4 py-10 shadow-md animate-fade-in">
+    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-80px)]  px-4 py-10  animate-fade-in">
       <img
         src={AddNoNotesWhenLogin}
         alt="No notes"

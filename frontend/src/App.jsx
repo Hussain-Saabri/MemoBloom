@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import VerifyOtp from "./pages/VerifyOtp/Verify-otp";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 const routes=(
             <Routes>
               <Route path="/" element={<Login />} />
@@ -11,6 +12,7 @@ const routes=(
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>    
 );      
 const App=()=>{

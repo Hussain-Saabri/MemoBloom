@@ -8,21 +8,22 @@ import toast from 'react-hot-toast';
 const Navbar = ({ setSearchQuery }) => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
+const isMobile = window.innerWidth < 480;
   const onLogout = () => {
-    toast.success("Logged Out!", {
+  toast.success("Logged Out!", {
   style: {
-    background: "linear-gradient(135deg, #4ade80, #16a34a)", // brighter green gradient
-    color: "#f0fdfa", // super light teal-ish
+    background: "linear-gradient(135deg, #4ade80, #16a34a)",
+    color: "#f0fdfa",
     fontWeight: "700",
-    borderRadius: "20px",
-    padding: "10px 40px",
-    boxShadow: "0 8px 25px rgba(22, 163, 74, 0.6), 0 0 15px rgba(5, 150, 105, 0.4)", // stronger glow
-    fontSize: "19px",
-    letterSpacing: "0.8px",
+    borderRadius: isMobile ? "14px" : "20px",
+    padding: isMobile ? "8px 20px" : "10px 40px",
+    boxShadow:
+      "0 6px 18px rgba(22, 163, 74, 0.5), 0 0 10px rgba(5, 150, 105, 0.3)",
+    fontSize: isMobile ? "15px" : "19px",
+    letterSpacing: isMobile ? "0.5px" : "0.8px",
     textTransform: "capitalize",
     fontFamily: "'Poppins', sans-serif",
-    backdropFilter: "blur(10px)",
+    backdropFilter: "blur(8px)",
     border: "1.5px solid rgba(22, 163, 74, 0.5)",
   },
   iconTheme: {

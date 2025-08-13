@@ -7,11 +7,11 @@ const Loader = () => {
   color="#3B82F6"
   size={100}
   cssOverride={{
-    borderWidth: "6px", // default is about 2-3px
+    borderWidth: "16px", // default is about 2-3px
   }}
 />
 
-  <h1 className="font-black mt-4">Loading</h1>
+  
 </div>
 
   );

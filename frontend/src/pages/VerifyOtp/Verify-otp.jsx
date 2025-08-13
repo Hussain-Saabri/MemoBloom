@@ -12,6 +12,7 @@ const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const passReset=location.state?.message;
 
   const toastStyleMobile = {
     style: {
@@ -28,7 +29,7 @@ const VerifyOtp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    
 
     try {
       const response = await axiosInstance.post("/verify-otp", {
@@ -47,11 +48,25 @@ const VerifyOtp = () => {
           style: { ...toastStyleMobile.style, background: "#dc2626", color: "#fff" },
         });
       } else if (response.data.message === "otp verified") {
-        toast.success("OTP verified successfully!", {
+
+        if(passReset)
+        {
+          navigate("/reset-password", { state: { email: email } });
+
+          toast.success("OTP verified successfully!", {
+          ...toastStyleMobile,
+          style: { ...toastStyleMobile.style, background: "#2563eb", color: "#fff" },
+        });
+        }else
+        {
+          toast.success("OTP verified successfully!", {
           ...toastStyleMobile,
           style: { ...toastStyleMobile.style, background: "#2563eb", color: "#fff" },
         });
         navigate("/dashboard");
+
+        }
+        
       } else if (response.data.message === "Otp doesnot match") {
         toast.error("Incorrect OTP. Please try again.", {
           ...toastStyleMobile,
@@ -61,14 +76,12 @@ const VerifyOtp = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Unexpected error. Try again.", toastStyleMobile);
       setError(error.response?.data?.message || "An unexpected error occurred.");
-    } finally {
-      setTimeout(() => setLoading(false), 500);
-    }
+    } 
   };
 
   const handleResendOtp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    
     setOtp("");
     try {
       const response = await axiosInstance.post("/resend-otp", { email });
@@ -82,7 +95,7 @@ const VerifyOtp = () => {
       toast.error(error.response?.data?.message || "Unexpected error. Try again.", toastStyleMobile);
       setError(error.response?.data?.message || "An unexpected error occurred.");
     } finally {
-      setLoading(false);
+      
     }
   };
 
@@ -120,18 +133,26 @@ const VerifyOtp = () => {
       className="w-[13%] min-w-[40px] sm:w-12 h-10 sm:h-12 text-center text-lg sm:text-xl font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
       onChange={(e) => {
         const val = e.target.value.replace(/[^0-9]/g, "");
-        if (val.length === 1 && i < 5) {
-          e.target.nextSibling?.focus();
-        }
         setOtp((prev) => {
           const arr = prev.split("");
-          arr[i] = val;
+          arr[i] = val; 
           return arr.join("");
         });
+        if (val && i < 5) {
+          // Move to next box automatically
+          e.target.nextSibling?.focus();
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Backspace" && !otp[i] && i > 0) {
+          
+          e.target.previousSibling?.focus();
+        }
       }}
     />
   ))}
 </div>
+
 
 
           <button
