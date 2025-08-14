@@ -35,3 +35,29 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to right, #00acc1, #1e88e5);
 }
+/* Tailwind ke saath react-burger-menu close button */
+.bm-cross-button {
+  @apply h-8 w-8; /* Tailwind height & width */
+}
+
+.bm-cross {
+  @apply bg-green-500; /* color change */
+}
+/* index.css */
+.bm-menu {
+  @apply bg-white; /* aapke website ka header color yahan dal do */
+  top: 60px; /* agar header height 60px hai */
+}
+
+.bm-overlay {
+  @apply bg-black/30; /* thoda transparent dark overlay */
+}
+
+.bm-cross {
+  @apply bg-green-500; /* close button color */
+}
+.bm-cross-button {
+  @apply h-8 w-8;
+}
+/* Sidebar ke liye custom CSS */
+

@@ -98,45 +98,40 @@ const Home = () => {
 
 
 {isLoading ? (
-  
-    <Loader/>
-   
-   
-  
-) :  allNotes.length === 0 ? (
+  <Loader />
+) : allNotes.length === 0 ? (
   <HomeEmptyCard />
+) : notesToShow.length === 0 ? (
+  <EmptyCard />   // ✅ direct yaha rakh do
 ) : (
   <div className="container mx-auto max-w-6xl px-4 mt-14">
-    {notesToShow.length === 0 ? (
-      <EmptyCard />
-    ) : (
-      <div
-        className="
-          grid gap-6
-          grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          xl:grid-cols-4
-          items-stretch
-        "
-      >
-        {notesToShow.map((item) => (
-          <NoteCard
-            key={item._id}
-            title={item.title}
-            date={moment(item.updatedOn).format("Do MMM YYYY")}
-            content={item.content}
-            tags={item.tags}
-            isPinned={item.isPinned}
-            onEdit={() => handleEdit(item)}
-            onDelete={() => handleDelete(item)}
-            onPinNote={() => {}}
-          />
-        ))}
-      </div>
-    )}
+    <div
+      className="
+        grid gap-6
+        grid-cols-1 
+        sm:grid-cols-2 
+        lg:grid-cols-3 
+        xl:grid-cols-4
+        items-stretch
+      "
+    >
+      {notesToShow.map((item) => (
+        <NoteCard
+          key={item._id}
+          title={item.title}
+          date={moment(item.updatedOn).format("Do MMM YYYY")}
+          content={item.content}
+          tags={item.tags}
+          isPinned={item.isPinned}
+          onEdit={() => handleEdit(item)}
+          onDelete={() => handleDelete(item)}
+          onPinNote={() => {}}
+        />
+      ))}
+    </div>
   </div>
 )}
+
 
 
    <div className="fixed bottom-6 right-6">
