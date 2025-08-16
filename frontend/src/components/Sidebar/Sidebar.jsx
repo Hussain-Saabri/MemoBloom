@@ -1,8 +1,16 @@
 import React from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { Link } from "react-router-dom";
+import { Button } from "flowbite-react";
 export default function Sidebar({ isOpen, onClose, className }) {
+
+  const onLogout=()=>{
+    
+    console.log("Logging out");
+    localStorage.clear();
+    navigate("/login");
+  }
   return (
     <AnimatePresence>
       {isOpen && (
@@ -31,12 +39,13 @@ export default function Sidebar({ isOpen, onClose, className }) {
 
             {/* Menu Items */}
            <nav className="flex flex-col px-4 text-base font-sans space-y-3 mt-6">
-  <a 
+  <Link 
     href="/" 
-    className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+    className="text-gray-800 text-lg font-medium tracking-wide 
+    hover:text-yellow-500 transition duration-200"
   >
     Dashboard
-  </a>
+  </Link>
   <a 
     href="/kanban" 
     className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
@@ -55,12 +64,13 @@ export default function Sidebar({ isOpen, onClose, className }) {
   >
     Products
   </a>
-  <a 
-    href="/login" 
+  <Link 
+    href="/" 
     className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+        onClick={onLogout}
   >
-    Sign In
-  </a>
+    Sign Out
+  </Link>
 </nav>
 
           </motion.div>

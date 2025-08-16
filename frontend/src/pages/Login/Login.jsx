@@ -4,7 +4,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import PasswordInput from "../../components/Input/PasswordInput";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
-import VerifyOtp from "../VerifyOtp/Verify-otp";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -51,7 +51,7 @@ const Login = () => {
       setIsLoading(false);
     }
   };
-
+//forgot-password function
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     if (!forgotEmail) return toast.error("Email is required");
@@ -145,8 +145,10 @@ const Login = () => {
           <form onSubmit={handleForgotPassword} className="space-y-4">
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               value={forgotEmail}
+              autoComplete="email"
               onChange={(e) => setForgotEmail(e.target.value)}
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white shadow-sm transition"
             />
