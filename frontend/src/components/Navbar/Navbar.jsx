@@ -12,36 +12,16 @@ const Navbar = ({ setSearchQuery }) => {
   const isMobile = window.innerWidth < 480;
 
   const onLogout = () => {
-    toast.success("Logged Out!", {
-      style: {
-        background: "linear-gradient(135deg, #4ade80, #16a34a)",
-        color: "#f0fdfa",
-        fontWeight: "700",
-        borderRadius: isMobile ? "14px" : "20px",
-        padding: isMobile ? "8px 20px" : "10px 40px",
-        boxShadow:
-          "0 6px 18px rgba(22, 163, 74, 0.5), 0 0 10px rgba(5, 150, 105, 0.3)",
-        fontSize: isMobile ? "15px" : "19px",
-        letterSpacing: isMobile ? "0.5px" : "0.8px",
-        textTransform: "capitalize",
-        fontFamily: "'Poppins', sans-serif",
-        backdropFilter: "blur(8px)",
-        border: "1.5px solid rgba(22, 163, 74, 0.5)",
-      },
-      iconTheme: {
-        primary: "#a7f3d0",
-        secondary: "#065f46",
-      },
-      duration: 4500,
-    });
-
-    localStorage.clear();
-    navigate("/login");
+    
+  navigate("/login");
+  localStorage.clear();
+   
   };
 
   return (
     <>
-      <nav className="sticky top-0 z-50  backdrop-blur-lg border-b border-sky-100 shadow-sm">
+     <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-sky-100 shadow-sm">
+
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           
           {/* Logo */}

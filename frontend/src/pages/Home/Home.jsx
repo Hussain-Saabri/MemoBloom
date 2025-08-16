@@ -20,6 +20,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getAllNotes = async () => {
+   
     try {
       
       const response = await axiosInstance.get("/get-note");
@@ -58,7 +59,7 @@ const Home = () => {
     console.log("Clicked on edit button");
     setOpenEditModal({ isShown: true, type: 'edit', data: item });
   };
-
+//delete the note
   const handleDelete = async (data) => {
     try {
       const response = await axiosInstance.delete("/delete-note/" + data._id);
@@ -71,6 +72,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log("Clicked on logout");
   const token = localStorage.getItem("token");
   if (!token) {
     navigate("/login");
@@ -104,7 +106,7 @@ const Home = () => {
 ) : notesToShow.length === 0 ? (
   <EmptyCard />   // ✅ direct yaha rakh do
 ) : (
-  <div className="container mx-auto max-w-6xl px-4 mt-14">
+  <div className="container mx-auto max-w-6xl px-4 mt-25">
     <div
       className="
         grid gap-6

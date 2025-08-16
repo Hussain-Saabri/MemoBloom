@@ -1,14 +1,16 @@
 import React from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Button } from "flowbite-react";
 export default function Sidebar({ isOpen, onClose, className }) {
-
+const navigate=useNavigate();
   const onLogout=()=>{
     
     console.log("Logging out");
     localStorage.clear();
+    console.log("navigating to the login");
     navigate("/login");
   }
   return (
@@ -38,39 +40,39 @@ export default function Sidebar({ isOpen, onClose, className }) {
            
 
             {/* Menu Items */}
-           <nav className="flex flex-col px-4 text-base font-sans space-y-3 mt-6">
+           <nav className="flex flex-col px-4  font-sans space-y-3 mt-6">
   <Link 
     href="/" 
-    className="text-gray-800 text-lg font-medium tracking-wide 
+    className="text-gray-800 font-medium text-[25px] tracking-wide 
     hover:text-yellow-500 transition duration-200"
   >
     Dashboard
   </Link>
+ 
+  
   <a 
-    href="/kanban" 
-    className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+    href="/products" 
+    className="text-gray-800  text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
   >
-    Kanban
-  </a>
-  <a 
-    href="/inbox" 
-    className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
-  >
-    Inbox
+    About
   </a>
   <a 
     href="/products" 
-    className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+    className="text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
   >
-    Products
+    Contact
   </a>
-  <Link 
-    href="/" 
-    className="text-gray-800 text-lg font-medium tracking-wide hover:text-yellow-500 transition duration-200"
-        onClick={onLogout}
-  >
-    Sign Out
-  </Link>
+  
+
+  
+  
+  
+  <button
+  onClick={onLogout}
+  className="text-gray-800 text-lg fixed top-55 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+>
+  Sign Out
+</button>
 </nav>
 
           </motion.div>
