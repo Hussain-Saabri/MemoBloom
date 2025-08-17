@@ -104,7 +104,7 @@ const Home = () => {
 ) : allNotes.length === 0 ? (
   <HomeEmptyCard />
 ) : notesToShow.length === 0 ? (
-  <EmptyCard />   // ✅ direct yaha rakh do
+  <EmptyCard />  
 ) : (
   <div className="container mx-auto max-w-6xl px-4 mt-25">
     <div

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import AddNoNotesImage from '../../assets/add-notes.svg';
 import { useState } from 'react';
 const EmptyCard = ({showEmptycard=false}) => {
