@@ -2,7 +2,7 @@ import React from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-
+import ContactUs from "../../pages/Contact/Contact";
 import { Button } from "flowbite-react";
 export default function Sidebar({ isOpen, onClose, className }) {
 const navigate=useNavigate();
@@ -41,23 +41,12 @@ const navigate=useNavigate();
 
             {/* Menu Items */}
            <nav className="flex flex-col px-4  font-sans space-y-3 mt-6">
-  <Link 
-    href="/" 
-    className="text-gray-800 font-medium text-[25px] tracking-wide 
-    hover:text-yellow-500 transition duration-200"
-  >
-    Dashboard
-  </Link>
+ 
  
   
+ 
   <a 
-    href="/products" 
-    className="text-gray-800  text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
-  >
-    About
-  </a>
-  <a 
-    href="/products" 
+    href="/contact" 
     className="text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
   >
     Contact
@@ -69,7 +58,7 @@ const navigate=useNavigate();
   
   <button
   onClick={onLogout}
-  className="absolute top-[170px] left-4 text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500"
+  className="absolute top-[70px] left-4 text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500"
 >
   Sign Out
 </button>
