@@ -69,7 +69,7 @@ const navigate=useNavigate();
   
   <button
   onClick={onLogout}
-  className="text-gray-800 text-lg fixed top-55 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+  className="absolute top-[170px] left-4 text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500"
 >
   Sign Out
 </button>

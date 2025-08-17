@@ -26,7 +26,7 @@ const Navbar = ({ setSearchQuery }) => {
           
           {/* Logo */}
           <h1
-            className="text-2xl sm:text-3xl font-extrabold tracking-wide bg-gradient-to-r from-sky-500 via-emerald-400 to-lime-400 bg-clip-text text-transparent cursor-pointer"
+            className="text-[30px] sm:text-3xl font-extrabold tracking-wide bg-gradient-to-r from-sky-500 via-emerald-400 to-lime-400 bg-clip-text text-transparent cursor-pointer"
             onClick={() => navigate("/")}
           >
             Memo<span className="font-black">Bloom</span>
