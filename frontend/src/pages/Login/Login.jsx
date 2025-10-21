@@ -60,8 +60,9 @@ const Login = () => {
     try {
      const response= await axiosInstance.post("/forgot-password", { email: forgotEmail });
      console.log("Passowrd reset ",response);
-     if(response.data.message==='Otp email sent again for forgot password')
+     if(response.data.message==='OTP email sent successfully for forgot password')
      {
+      console.log("navigating to the otp verifying page")
        navigate("/verify-otp",{state:{email: forgotEmail,message:'resetpass'}});
        toast.success("Password reset link sent to your email!");
       setShowForgot(false);

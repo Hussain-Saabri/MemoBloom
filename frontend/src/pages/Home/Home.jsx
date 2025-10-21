@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import moment from 'moment';
 import HomeEmptyCard from '../../components/Cards/HomeEmptyCard';
+import toast from 'react-hot-toast';
+
 const Home = () => {
 
   const [openAddEditModal, setOpenEditModal] = useState({ isShown: false, type: 'add', data: null });
@@ -25,7 +27,8 @@ const Home = () => {
       
       const response = await axiosInstance.get("/get-note");
       if (response.data && response.data.note) {
-        setAllNotes(response.data.note);
+        const sortedNotes = response.data.note.sort((a, b) => b.isPinned - a.isPinned);
+        setAllNotes(sortedNotes);
         console.log("All notes:", response.data.note);
       }
     } catch (error) {
@@ -59,11 +62,82 @@ const Home = () => {
     console.log("Clicked on edit button");
     setOpenEditModal({ isShown: true, type: 'edit', data: item });
   };
+
+// pinned the note
+
+const handlePinNote = async(note) => {
+
+  try{
+    console.log();
+    console.log();
+      console.log(note._id);
+      const noteExtract = await axiosInstance.get("/get-single-note/" + note._id);
+      console.log("CLicked on the pin note button");
+      console.log("previous pin note",noteExtract.data.note.isPinned);
+      const updatedPin = !noteExtract.data.note.isPinned;
+      console.log("updating pinnote to",updatedPin);
+
+      const response = await axiosInstance.put("/update-note-pin/" + note._id,{
+        updatedPin
+      });
+
+      console.log("Response from updating the pin note");
+
+    console.log(response);
+    if (!response.data.error) {
+      
+      await getAllNotes();
+      
+    }
+
+    if( updatedPin == true )
+    {
+      toast.success("Note Pin successfully!");
+    }else{
+       toast.success("Note unpinned successfully!");
+    }
+
+  }catch(error){
+    console.log(error);
+  }
+
+};
+
+
+
 //delete the note
   const handleDelete = async (data) => {
     try {
       const response = await axiosInstance.delete("/delete-note/" + data._id);
       if (response.data && !response.data.error) {
+
+
+                toast.error("Note Deleted Successfully!", {
+  style: {
+    background: "linear-gradient(145deg, #ef4444, #b91c1c)", // red gradient
+    color: "#fff5f5", 
+    fontWeight: "700",
+    borderRadius: "16px",
+    padding: "10px 24px",
+    boxShadow: "0 6px 20px rgba(185, 28, 28, 0.5), 0 0 10px rgba(239, 68, 68, 0.3)", 
+    fontSize: "18px",
+    letterSpacing: "0.7px",
+    textTransform: "capitalize",
+    fontFamily: "'Poppins', sans-serif",
+    backdropFilter: "blur(8px)",
+    border: "1px solid rgba(255,255,255,0.2)",
+  },
+  iconTheme: {
+    primary: "#fee2e2", // soft pink/red tone
+    secondary: "#7f1d1d", // darker red for icon
+  },
+  duration: 4000,
+});
+
+
+
+
+
         getAllNotes();
       }
     } catch (error) {
@@ -121,13 +195,15 @@ const Home = () => {
         <NoteCard
           key={item._id}
           title={item.title}
-          date={moment(item.updatedOn).format("Do MMM YYYY")}
-          content={item.content}
+          date={moment(item.createdOn).format("Do MMM YYYY")}
+          content={
+            
+            item.content}
           tags={item.tags}
           isPinned={item.isPinned}
           onEdit={() => handleEdit(item)}
           onDelete={() => handleDelete(item)}
-          onPinNote={() => {}}
+          onPinNote={() => handlePinNote(item)}
         />
       ))}
     </div>

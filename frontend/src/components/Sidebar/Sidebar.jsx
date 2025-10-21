@@ -45,12 +45,13 @@ const navigate=useNavigate();
  
   
  
-  <a 
-    href="/contact" 
-    className="text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
-  >
-    Contact
-  </a>
+<Link 
+  to="/contact" 
+  className="text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500 transition duration-200"
+  onClick={onClose} // also close sidebar after navigating
+>
+  Contact
+</Link>
   
 
   
@@ -60,7 +61,7 @@ const navigate=useNavigate();
   onClick={onLogout}
   className="absolute top-[70px] left-4 text-gray-800 text-[25px] font-medium tracking-wide hover:text-yellow-500"
 >
-  Sign Out
+  SignOut
 </button>
 </nav>
 

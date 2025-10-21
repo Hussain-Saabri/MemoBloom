@@ -9,7 +9,7 @@ const NoteCard = ({
   isPinned,
   onEdit,
   onDelete,
-  onPinNote
+  onPinNote,
 }) => {
   return (
    <div

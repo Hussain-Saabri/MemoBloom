@@ -7,9 +7,10 @@ const AddEditNotes = ({noteData,type,getAllNotes,onClose}) => {
   const[content,setContent]=useState(noteData?.content || "");
   const[tags,setTags]=useState(noteData?.tags?.join(", ") || "");
   const[titleError,settitleError]=useState(null);
-const[contentError,setcontentError]=useState(null);
-const[tagsError,settagsError]=useState(null);
-  const addNewNotes=async()=>{
+  const[contentError,setcontentError]=useState(null);
+  const[tagsError,settagsError]=useState(null);
+  
+const addNewNotes=async()=>{
     console.log("Adding the note gets started");
     try {
       const response=await axiosInstance.post("/add-note",{
@@ -66,9 +67,29 @@ const[tagsError,settagsError]=useState(null);
     });
     if(response.data && response.data.note)
     {
+      toast.success("Note Edited Successfully!", {
+  style: {
+    background: "linear-gradient(145deg, #34d399, #059669)", 
+    color: "#e6fffa", 
+    fontWeight: "700",
+    borderRadius: "16px",
+    padding: "10px 24px",
+    boxShadow: "0 6px 20px rgba(5, 150, 105, 0.5), 0 0 10px rgba(56, 189, 248, 0.3)", 
+    fontSize: "18px",
+    letterSpacing: "0.7px",
+    textTransform: "capitalize",
+    fontFamily: "'Poppins', sans-serif",
+    backdropFilter: "blur(8px)", 
+  },
+  iconTheme: {
+    primary: "#a7f3d0",
+    secondary: "#064e3b",
+  },
+  duration: 4000,
+});
       console.log(response.data.note);
       onClose();
-     getAllNotes();
+      getAllNotes();
       
 
     }
